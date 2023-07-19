@@ -1,5 +1,7 @@
 FROM linuxserver/ffmpeg
 
+ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
+
 WORKDIR /
 
 COPY gizmo.mp4 /video.mp4
