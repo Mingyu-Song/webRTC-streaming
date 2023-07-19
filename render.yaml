@@ -1,5 +1,6 @@
 services:
-  - name: server
+  - type: web
+    name: server
     dockerfile: ./server.Dockerfile
     image: bluenviron/mediamtx:latest-ffmpeg
     env:
@@ -19,7 +20,8 @@ services:
       - host.docker.internal:host-gateway
     start_command: # Add the command to start the server if needed
 
-  - name: stream-eo
+  - type: web
+    name: stream-eo
     dockerfile: ./stream-eo.Dockerfile
     image: linuxserver/ffmpeg
     env:
@@ -45,7 +47,8 @@ services:
         "rtsp://localhost:8554/stream-eo",
       ]
 
-  - name: stream-ir
+  - type: web
+    name: stream-ir
     dockerfile: ./stream-ir.Dockerfile
     image: linuxserver/ffmpeg
     env:
