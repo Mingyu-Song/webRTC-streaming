@@ -1,53 +1,72 @@
 services:
-  - type: web
-    name: server
+  - name: server
+    dockerfile: ./server.Dockerfile
+    image: bluenviron/mediamtx:latest-ffmpeg
     env:
-      - key: "PORTS"
-        value: "8189, 8554, 1935, 8888, 8889"
-    instanceType: "Automatic"
-    envVars:
-      - key: "STREAM_EO_URL"
-        fromService: "stream-eo"
-      - key: "STREAM_IR_URL"
-        fromService: "stream-ir"
-      - key: "FFMPEG_INPUT_FILE"
-        value: "/gizmo.mp4"
-      - key: "CONFIG_FILE"
-        value: "/mediamtx.yml"
-    image: "bluenviron/mediamtx:latest-ffmpeg"
-
-  - type: web
-    name: stream-eo
-    instanceType: "Automatic"
-    image: "linuxserver/ffmpeg"
-    envVars:
-      - key: "FFMPEG_INPUT_FILE"
-        value: "/gizmo.mp4"
-      - key: "FFMPEG_OUTPUT_FORMAT"
-        value: "rtsp"
-      - key: "FFMPEG_OUTPUT_URL"
-        value: "rtsp://localhost:8554/stream-eo"
-      - key: "FFMPEG_INPUT_LOOP"
-        value: "1"
-      - key: "FFMPEG_TRANSPORT_PROTOCOL"
-        value: "tcp"
+      # Add environment variables here if needed
+    volumes:
+      - from: mediamtx.yml
+        to: /mediamtx.yml
+      - from: gizmo.mp4
+        to: /video.mp4
     ports:
+      - 8189:8189
       - 8554:8554
+      - 1935:1935
+      - 8888:8888
+      - 8889:8889
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    start_command: # Add the command to start the server if needed
 
-  - type: web
-    name: stream-ir
-    instanceType: "Automatic"
-    image: "linuxserver/ffmpeg"
-    envVars:
-      - key: "FFMPEG_INPUT_FILE"
-        value: "/gizmo.mp4"
-      - key: "FFMPEG_OUTPUT_FORMAT"
-        value: "rtsp"
-      - key: "FFMPEG_OUTPUT_URL"
-        value: "rtsp://localhost:8554/stream-ir"
-      - key: "FFMPEG_INPUT_LOOP"
-        value: "1"
-      - key: "FFMPEG_TRANSPORT_PROTOCOL"
-        value: "tcp"
-    ports:
-      - 8554:8554
+  - name: stream-eo
+    dockerfile: ./stream-eo.Dockerfile
+    image: linuxserver/ffmpeg
+    env:
+      # Add environment variables here if needed
+    volumes:
+      - from: gizmo.mp4
+        to: /video.mp4
+    ports: []
+    network_mode: host
+    command:
+      [
+        "-re",
+        "-stream_loop",
+        "-1",
+        "-i",
+        "/video.mp4",
+        "-c",
+        "copy",
+        "-f",
+        "rtsp",
+        "-rtsp_transport",
+        "tcp",
+        "rtsp://localhost:8554/stream-eo",
+      ]
+
+  - name: stream-ir
+    dockerfile: ./stream-ir.Dockerfile
+    image: linuxserver/ffmpeg
+    env:
+      # Add environment variables here if needed
+    volumes:
+      - from: gizmo.mp4
+        to: /video.mp4
+    ports: []
+    network_mode: host
+    command:
+      [
+        "-re",
+        "-stream_loop",
+        "-1",
+        "-i",
+        "/video.mp4",
+        "-c",
+        "copy",
+        "-f",
+        "rtsp",
+        "-rtsp_transport",
+        "tcp",
+        "rtsp://localhost:8554/stream-ir",
+      ]
