@@ -1,5 +1,7 @@
 FROM bluenviron/mediamtx:latest-ffmpeg
 
+WORKDIR /
+
 COPY mediamtx.yml /mediamtx.yml
 COPY gizmo.mp4 /video.mp4
 

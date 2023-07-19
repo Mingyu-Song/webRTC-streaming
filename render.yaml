@@ -4,21 +4,15 @@ services:
     runtime: docker
     dockerfilePath: ./server.Dockerfile
     dockerContext: ./
-    # image:
-    #   url: bluenviron/mediamtx:latest-ffmpeg
 
   - type: web
     name: stream-eo
     runtime: docker
     dockerfilePath: ./stream-eo.Dockerfile
     dockerContext: ./
-    # image:
-    #   url: linuxserver/ffmpeg
 
   - type: web
     name: stream-ir
     runtime: docker
     dockerfilePath: ./stream-ir.Dockerfile
     dockerContext: ./
-    # image:
-    # url: linuxserver/ffmpeg
