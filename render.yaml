@@ -3,6 +3,7 @@ services:
     name: server
     runtime: docker
     dockerfilePath: ./server.Dockerfile
+    dockerContext: ./
     image:
       url: bluenviron/mediamtx:latest-ffmpeg
     # env:
@@ -26,6 +27,7 @@ services:
     name: stream-eo
     runtime: docker
     dockerfilePath: ./stream-eo.Dockerfile
+    dockerContext: ./
     image:
       url: linuxserver/ffmpeg
     # env:
@@ -55,6 +57,7 @@ services:
     name: stream-ir
     runtime: docker
     dockerfilePath: ./stream-ir.Dockerfile
+    dockerContext: ./
     image:
       url: linuxserver/ffmpeg
     # env:
