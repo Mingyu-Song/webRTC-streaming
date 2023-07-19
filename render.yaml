@@ -1,18 +1,21 @@
 services:
   - type: web
     name: server
+    env: docker
     runtime: docker
     dockerfilePath: ./server.Dockerfile
     dockerContext: ./
 
   - type: web
     name: stream-eo
+    env: docker
     runtime: docker
     dockerfilePath: ./stream-eo.Dockerfile
     dockerContext: ./
 
   - type: web
     name: stream-ir
+    env: docker
     runtime: docker
     dockerfilePath: ./stream-ir.Dockerfile
     dockerContext: ./
