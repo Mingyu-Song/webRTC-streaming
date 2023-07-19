@@ -5,6 +5,15 @@ services:
     runtime: docker
     dockerfilePath: ./server.Dockerfile
     dockerContext: ./
+    envVars:
+      - key: "STREAM_EO_URL"
+        fromService: "stream-eo"
+      - key: "STREAM_IR_URL"
+        fromService: "stream-ir"
+      - key: "FFMPEG_INPUT_FILE"
+        value: "/video.mp4"
+      - key: "CONFIG_FILE"
+        value: "/mediamtx.yml"
 
   - type: web
     name: stream-eo
@@ -12,6 +21,17 @@ services:
     runtime: docker
     dockerfilePath: ./stream-eo.Dockerfile
     dockerContext: ./
+    envVars:
+      - key: "FFMPEG_INPUT_FILE"
+        value: "/video.mp4"
+      - key: "FFMPEG_OUTPUT_FORMAT"
+        value: "rtsp"
+      - key: "FFMPEG_OUTPUT_URL"
+        value: "rtsp://localhost:8554/stream-eo"
+      - key: "FFMPEG_INPUT_LOOP"
+        value: "1"
+      - key: "FFMPEG_TRANSPORT_PROTOCOL"
+        value: "tcp"
 
   - type: web
     name: stream-ir
@@ -19,3 +39,14 @@ services:
     runtime: docker
     dockerfilePath: ./stream-ir.Dockerfile
     dockerContext: ./
+    envVars:
+      - key: "FFMPEG_INPUT_FILE"
+        value: "/video.mp4"
+      - key: "FFMPEG_OUTPUT_FORMAT"
+        value: "rtsp"
+      - key: "FFMPEG_OUTPUT_URL"
+        value: "rtsp://localhost:8554/stream-ir"
+      - key: "FFMPEG_INPUT_LOOP"
+        value: "1"
+      - key: "FFMPEG_TRANSPORT_PROTOCOL"
+        value: "tcp"
