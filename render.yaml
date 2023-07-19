@@ -6,22 +6,6 @@ services:
     dockerContext: ./
     image:
       url: bluenviron/mediamtx:latest-ffmpeg
-    # env:
-    #   # Add environment variables here if needed
-    # volumes:
-    #   - from: mediamtx.yml
-    #     to: /mediamtx.yml
-    #   - from: gizmo.mp4
-    #     to: /video.mp4
-    # ports:
-    #   - 8189:8189
-    #   - 8554:8554
-    #   - 1935:1935
-    #   - 8888:8888
-    #   - 8889:8889
-    # extra_hosts:
-    #   - host.docker.internal:host-gateway
-    # start_command: # Add the command to start the server if needed
 
   - type: web
     name: stream-eo
@@ -30,28 +14,6 @@ services:
     dockerContext: ./
     image:
       url: linuxserver/ffmpeg
-    # env:
-    #   # Add environment variables here if needed
-    # volumes:
-    #   - from: gizmo.mp4
-    #     to: /video.mp4
-    # ports: []
-    # network_mode: host
-    # command:
-    #   [
-    #     "-re",
-    #     "-stream_loop",
-    #     "-1",
-    #     "-i",
-    #     "/video.mp4",
-    #     "-c",
-    #     "copy",
-    #     "-f",
-    #     "rtsp",
-    #     "-rtsp_transport",
-    #     "tcp",
-    #     "rtsp://localhost:8554/stream-eo",
-    #   ]
 
   - type: web
     name: stream-ir
@@ -60,25 +22,3 @@ services:
     dockerContext: ./
     image:
       url: linuxserver/ffmpeg
-    # env:
-    #   # Add environment variables here if needed
-    # volumes:
-    #   - from: gizmo.mp4
-    #     to: /video.mp4
-    # ports: []
-    # network_mode: host
-    # command:
-    #   [
-    #     "-re",
-    #     "-stream_loop",
-    #     "-1",
-    #     "-i",
-    #     "/video.mp4",
-    #     "-c",
-    #     "copy",
-    #     "-f",
-    #     "rtsp",
-    #     "-rtsp_transport",
-    #     "tcp",
-    #     "rtsp://localhost:8554/stream-ir",
-    #   ]
