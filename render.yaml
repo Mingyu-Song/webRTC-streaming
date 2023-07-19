@@ -1,5 +1,6 @@
 services:
-  - name: server
+  - type: web
+    name: server
     env:
       - key: "PORTS"
         value: "8189, 8554, 1935, 8888, 8889"
@@ -15,7 +16,8 @@ services:
         value: "/mediamtx.yml"
     image: "bluenviron/mediamtx:latest-ffmpeg"
 
-  - name: stream-eo
+  - type: web
+    name: stream-eo
     instanceType: "Automatic"
     image: "linuxserver/ffmpeg"
     envVars:
@@ -32,7 +34,8 @@ services:
     ports:
       - 8554:8554
 
-  - name: stream-ir
+  - type: web
+    name: stream-ir
     instanceType: "Automatic"
     image: "linuxserver/ffmpeg"
     envVars:
