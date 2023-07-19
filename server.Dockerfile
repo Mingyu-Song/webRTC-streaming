@@ -1,8 +1,9 @@
 FROM bluenviron/mediamtx:latest-ffmpeg
 
-WORKDIR /
+WORKDIR /app
 
-COPY mediamtx.yml /mediamtx.yml
-COPY gizmo.mp4 /video.mp4
+COPY mediamtx.yml /app/mediamtx.yml
+COPY gizmo.mp4 /app/video.mp4
 
 EXPOSE 8189 8554 1935 8888 8889
+
