@@ -6,10 +6,6 @@ services:
     dockerfilePath: ./server.Dockerfile
     dockerContext: ./
     envVars:
-      - key: "STREAM_EO_URL"
-        fromService: "stream-eo"
-      - key: "STREAM_IR_URL"
-        fromService: "stream-ir"
       - key: "FFMPEG_INPUT_FILE"
         value: "/video.mp4"
       - key: "CONFIG_FILE"
