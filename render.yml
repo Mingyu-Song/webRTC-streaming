@@ -1,0 +1,50 @@
+services:
+  - name: server
+    env:
+      - key: "PORTS"
+        value: "8189, 8554, 1935, 8888, 8889"
+    instanceType: "Automatic"
+    envVars:
+      - key: "STREAM_EO_URL"
+        fromService: "stream-eo"
+      - key: "STREAM_IR_URL"
+        fromService: "stream-ir"
+      - key: "FFMPEG_INPUT_FILE"
+        value: "/gizmo.mp4"
+      - key: "CONFIG_FILE"
+        value: "/mediamtx.yml"
+    image: "bluenviron/mediamtx:latest-ffmpeg"
+
+  - name: stream-eo
+    instanceType: "Automatic"
+    image: "linuxserver/ffmpeg"
+    envVars:
+      - key: "FFMPEG_INPUT_FILE"
+        value: "/gizmo.mp4"
+      - key: "FFMPEG_OUTPUT_FORMAT"
+        value: "rtsp"
+      - key: "FFMPEG_OUTPUT_URL"
+        value: "rtsp://localhost:8554/stream-eo"
+      - key: "FFMPEG_INPUT_LOOP"
+        value: "1"
+      - key: "FFMPEG_TRANSPORT_PROTOCOL"
+        value: "tcp"
+    ports:
+      - 8554:8554
+
+  - name: stream-ir
+    instanceType: "Automatic"
+    image: "linuxserver/ffmpeg"
+    envVars:
+      - key: "FFMPEG_INPUT_FILE"
+        value: "/gizmo.mp4"
+      - key: "FFMPEG_OUTPUT_FORMAT"
+        value: "rtsp"
+      - key: "FFMPEG_OUTPUT_URL"
+        value: "rtsp://localhost:8554/stream-ir"
+      - key: "FFMPEG_INPUT_LOOP"
+        value: "1"
+      - key: "FFMPEG_TRANSPORT_PROTOCOL"
+        value: "tcp"
+    ports:
+      - 8554:8554
